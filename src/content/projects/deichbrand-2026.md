@@ -11,8 +11,13 @@ gallery:
   - ../../assets/projects/deichbrand-2026/01.jpg
   - ../../assets/projects/deichbrand-2026/02.jpg
   - ../../assets/projects/deichbrand-2026/03.jpg
+stats:
+  - value: "2"
+    label: Bühnen – Fire Stage und Water Stage
+  - value: "7+"
+    label: Acts auf- und abgebaut
 ---
 
-Als Stagehand beim Deichbrand Festival 2026 war ich Teil des Bühnenteams.
+Beim Deichbrand Festival 2026 war ich als Stagehand auf der Fire Stage und der Water Stage im Einsatz – unter anderem bei den Shows von Ikkimel, SDP, Sido, Zartmann, Giant Rooks, 102 Boyz und 01099.
 
-*✎ Platzhalter: Auf welcher Bühne warst du? Welche Aufgaben hattest du (Auf- und Abbau, Umbauten zwischen den Acts, Backline …)? Wie groß war das Team, und was hast du mitgenommen?*
+Zu meinen Aufgaben gehörten der Auf- und Abbau, das Verkabeln der Lichttechnik und die Umsetzung des Bühnendesigns nach Vorgaben der Produktion.

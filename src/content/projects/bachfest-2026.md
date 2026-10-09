@@ -11,8 +11,15 @@ gallery:
   - ../../assets/projects/bachfest-2026/01.jpg
   - ../../assets/projects/bachfest-2026/02.jpg
   - ../../assets/projects/bachfest-2026/03.jpg
+stats:
+  - value: "9"
+    label: Kameras von Blackmagic, Panasonic und Canon
+  - value: "4"
+    label: Produktionstage
+  - value: "2"
+    label: Ausspielwege – LED-Wände und Aufzeichnung
 ---
 
-Als Bildingenieur beim Leipziger Bachfest 2026 war ich für die Bildtechnik verantwortlich.
+Beim Leipziger Bachfest 2026 war ich als Bildingenieur für die Bildtechnik zuständig – ein Jahr nach meinem Einsatz als Schulterkamera. Ausgespielt wurde auf die Live-LED-Wände und in die Aufzeichnung.
 
-*✎ Platzhalter: Für welche Ausspielwege (LED-Wände, Livestream, TV)? Mit welcher Technik (Kameras, CCUs, Shading …)? Wie viele Konzerte oder Tage?*
+Über vier Produktionstage habe ich neun Kameras von Blackmagic, Panasonic (PTZ) und Canon betreut, unter anderem über ein Blackmagic-Panel: Farben und Schwarzwert laufend während der Produktion korrigiert und Weißabgleiche gemacht, damit alle Kameras zueinander passen.

@@ -217,8 +217,10 @@ const plainText = project.body?.replace(/\s+/g, ' ').trim().slice(0, 155);
     margin: clamp(2rem, 5vw, 3rem) auto 0;
   }
 
-  .stats div { display: flex; flex-direction: column-reverse; gap: 0.4rem; }
+  /* Zahl oben, Beschriftung darunter – alle Zahlen auf einer Linie */
+  .stats div { display: flex; flex-direction: column; gap: 0.4rem; }
   .stats dd {
+    order: -1;
     margin: 0;
     font-family: var(--font-display);
     font-size: calc(var(--ds) * clamp(3rem, 6vw, 4.5rem));
