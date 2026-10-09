@@ -45,6 +45,19 @@ const plainText = project.body?.replace(/\s+/g, ' ').trim().slice(0, 155);
       </div>
     </header>
 
+    {
+      data.stats.length > 0 && (
+        <dl class="wrap stats">
+          {data.stats.map((s) => (
+            <div>
+              <dt>{s.label}</dt>
+              <dd>{s.value}</dd>
+            </div>
+          ))}
+        </dl>
+      )
+    }
+
     <div class="wrap body">
       <dl class="facts">
         <div><dt>Rolle</dt><dd>{data.role}</dd></div>
@@ -197,8 +210,34 @@ const plainText = project.body?.replace(/\s+/g, ' ').trim().slice(0, 155);
   .facts dt { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
   .facts dd { margin: 0.2rem 0 0; }
 
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+    gap: 1.5rem clamp(1rem, 3vw, 2.5rem);
+    margin: clamp(2rem, 5vw, 3rem) auto 0;
+  }
+
+  .stats div { display: flex; flex-direction: column-reverse; gap: 0.4rem; }
+  .stats dd {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: calc(var(--ds) * clamp(3rem, 6vw, 4.5rem));
+    line-height: 1;
+    color: var(--accent);
+  }
+  .stats dt { font-size: 0.9rem; color: var(--muted); max-width: 22ch; }
+
   .text { font-size: clamp(1.05rem, 1.8vw, 1.3rem); font-weight: 300; line-height: 1.6; max-width: 44rem; }
   .text :global(p) { margin: 0 0 1em; }
+  .text :global(h2) {
+    font-size: calc(var(--ds) * clamp(1.9rem, 3.5vw, 2.6rem));
+    margin: 2.2em 0 0.5em;
+  }
+  .text :global(h2:first-child) { margin-top: 0; }
+  .text :global(ul) { margin: 0 0 1em; padding-left: 1.2em; }
+  .text :global(li) { margin-bottom: 0.4em; }
+  .text :global(li::marker) { color: var(--accent); }
+  .text :global(strong) { font-weight: 500; color: var(--text); }
 
   .links { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; font-weight: 400; }
 

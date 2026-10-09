@@ -27,6 +27,8 @@ const projects = defineCollection({
       cover: image(),
       gallery: z.array(image()).default([]),
       credits: z.string().optional(),
+      // Kennzahlen, die groß über dem Text erscheinen (optional)
+      stats: z.array(z.object({ value: z.string(), label: z.string() })).default([]),
       links: z.array(z.object({ label: z.string(), url: z.string().url() })).default([]),
     }),
 });

@@ -6,6 +6,7 @@ import portrait from '../assets/site/portrait.jpg';
 import { getProjects } from '../lib/projects';
 
 const projects = await getProjects();
+const thesis = projects.find((p) => p.id === 'bachelorprojekt-ki-regie');
 
 // Veranstaltungen, Marken und Personen, bei deren Projekten ich mitgewirkt habe
 const credits = [
@@ -133,6 +134,7 @@ const categories = Object.entries(CATEGORIES)
         <dd>
           Leistungsanalyse KI-basierter Regiesysteme im Vergleich zu menschlichen Schnittentscheidungen in
           standardisierten Live-Formaten <span class="about__grade">Note 1,0</span>
+          {thesis && <a class="about__link" href={`/projekte/${thesis.id}/`}>Zum Projekt →</a>}
         </dd>
       </div>
       <div>
@@ -319,6 +321,16 @@ const categories = Object.entries(CATEGORIES)
     .credits__list { flex-wrap: wrap; white-space: normal; }
     .credits__list[aria-hidden] { display: none; }
   }
+
+  .about__link {
+    display: block;
+    margin-top: 0.4rem;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+
+  .about__link:hover { text-decoration: underline; }
 
   .about__grade {
     display: inline-block;
