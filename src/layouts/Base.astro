@@ -1,0 +1,138 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = 'Portfolio von Thadeus Zwiener – Medientechnik, Technische Leitung, Licht, Kamera und Produktion aus Leipzig.',
+} = Astro.props;
+const fullTitle = title ? `${title} – Thadeus Zwiener` : 'Thadeus Zwiener – Portfolio';
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <header class="nav">
+      <div class="wrap nav__inner">
+        <a href="/" class="nav__brand">Thadeus Zwiener</a>
+        <nav aria-label="Hauptnavigation">
+          <a href="/#projekte">Projekte</a>
+          <a href="/#about">Über mich</a>
+          <a href="/#kontakt">Kontakt</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="footer" id="kontakt">
+      <div class="wrap footer__inner">
+        <div>
+          <p class="eyebrow eyebrow--accent">Kontakt</p>
+          <h2 class="footer__title">Lass uns zusammen<br />etwas umsetzen.</h2>
+          <p class="footer__text">
+            Ich freue mich auf Anfragen zur Projektmitarbeit deutschlandweit und bin jederzeit offen für neue
+            Herausforderungen.
+          </p>
+          <div class="footer__actions">
+            <a class="btn btn--solid" href="mailto:z-wiener@t-online.de">z-wiener@t-online.de</a>
+            <a class="btn" href="https://www.linkedin.com/in/thadeus-zwiener-903545238/" target="_blank" rel="noopener">
+              LinkedIn ↗
+            </a>
+          </div>
+        </div>
+        <p class="footer__meta">© {new Date().getFullYear()} Thadeus Zwiener</p>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(10, 10, 11, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .nav__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    height: 3.75rem;
+  }
+
+  .nav__brand {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+  }
+
+  nav {
+    display: flex;
+    gap: clamp(0.9rem, 3vw, 2rem);
+  }
+
+  nav a {
+    font-size: 0.8rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--muted);
+    transition: color 0.2s;
+  }
+
+  nav a:hover { color: var(--text); }
+
+  .footer {
+    margin-top: clamp(4rem, 10vw, 8rem);
+    border-top: 1px solid var(--line);
+    padding-block: clamp(3rem, 8vw, 6rem) 2rem;
+  }
+
+  .footer__title {
+    font-size: clamp(2.8rem, 8vw, 6rem);
+    margin-block: 0.75rem 1.25rem;
+  }
+
+  .footer__text { color: var(--muted); max-width: 34rem; }
+
+  .footer__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.75rem;
+  }
+
+  .footer__meta {
+    margin-top: 4rem;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  @media (max-width: 520px) {
+    .nav__brand { font-size: 1.2rem; }
+    nav a { font-size: 0.7rem; letter-spacing: 0.08em; }
+  }
+</style>

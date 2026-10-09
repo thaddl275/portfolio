@@ -1,0 +1,274 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import { CATEGORIES } from '../content.config';
+import portrait from '../assets/site/portrait.jpg';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+
+const categories = Object.entries(CATEGORIES)
+  .map(([key, label]) => ({ key, label, count: projects.filter((p) => p.data.category === key).length }))
+  .filter((c) => c.count > 0);
+---
+
+<Base>
+  <section class="hero">
+    <div class="hero__frame">
+      <Image src={portrait} alt="Porträt von Thadeus Zwiener" widths={[800, 1400, 2160]} sizes="100vw" loading="eager" class="hero__img" />
+      <div class="hero__shade"></div>
+      <div class="wrap hero__content">
+        <p class="eyebrow eyebrow--accent">B.Eng. Medientechnik · Leipzig</p>
+        <h1 class="hero__title">Thadeus<br />Zwiener</h1>
+        <p class="hero__roles">Technische Leitung · Licht · Kamera · Produktion</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="intro wrap" id="about">
+    <p class="eyebrow">Über mich</p>
+    <p class="intro__text">
+      Willkommen in meinem Portfolio! Hier zeige ich einen Ausschnitt aus meinen Projekten, die während der letzten
+      Jahre entstanden sind – im Medientechnik-Bachelor oder auch außerhalb. Viel Spaß!
+    </p>
+  </section>
+
+  <section class="wrap projects" id="projekte">
+    <div class="projects__head">
+      <h2 class="projects__title">Projekte</h2>
+      <div class="filter" role="group" aria-label="Projekte filtern">
+        <button type="button" class="filter__btn is-active" data-filter="all" aria-pressed="true">
+          Alle <span>{projects.length}</span>
+        </button>
+        {
+          categories.map((c) => (
+            <button type="button" class="filter__btn" data-filter={c.key} aria-pressed="false">
+              {c.label} <span>{c.count}</span>
+            </button>
+          ))
+        }
+      </div>
+    </div>
+
+    <ul class="grid">
+      {
+        projects.map((p, i) => (
+          <li class="card" data-category={p.data.category}>
+            <a href={`/projekte/${p.id}/`} class="card__link">
+              <div class="card__media">
+                <Image src={p.data.cover} alt="" widths={[480, 800, 1200]} sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw" class="card__img" />
+                <span class="card__num">{String(i + 1).padStart(2, '0')}</span>
+              </div>
+              <div class="card__body">
+                <p class="eyebrow eyebrow--accent">{p.data.role}</p>
+                <h3 class="card__title">{p.data.title}</h3>
+                <p class="card__meta">
+                  {CATEGORIES[p.data.category]}
+                  {p.data.year && ` · ${p.data.year}`}
+                </p>
+              </div>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Base>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.filter__btn');
+  const cards = document.querySelectorAll<HTMLElement>('.card');
+
+  function applyFilter(filter: string) {
+    buttons.forEach((b) => {
+      const active = b.dataset.filter === filter;
+      b.classList.toggle('is-active', active);
+      b.setAttribute('aria-pressed', String(active));
+    });
+    cards.forEach((c) => {
+      c.hidden = filter !== 'all' && c.dataset.category !== filter;
+    });
+  }
+
+  buttons.forEach((b) =>
+    b.addEventListener('click', () => {
+      const filter = b.dataset.filter!;
+      applyFilter(filter);
+      history.replaceState(null, '', filter === 'all' ? '#projekte' : `#${filter}`);
+    }),
+  );
+
+  // Direktlink auf eine Kategorie, z. B. thadeuszwiener.de/#kamera
+  const fromHash = location.hash.slice(1);
+  if ([...buttons].some((b) => b.dataset.filter === fromHash)) {
+    applyFilter(fromHash);
+    document.getElementById('projekte')?.scrollIntoView();
+  }
+</script>
+
+<style>
+  .hero__frame {
+    position: relative;
+    min-height: min(88vh, 900px);
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+  }
+
+  .hero__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 30% 35%;
+    filter: saturate(0.75) contrast(1.05) brightness(0.8);
+  }
+
+  .hero__shade {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to top, var(--bg) 0%, rgba(10, 10, 11, 0.55) 40%, rgba(10, 10, 11, 0.1) 75%),
+      linear-gradient(to right, rgba(10, 10, 11, 0.6), transparent 60%);
+  }
+
+  .hero__content {
+    position: relative;
+    width: 100%;
+    padding-bottom: clamp(2.5rem, 7vw, 5rem);
+  }
+
+  .hero__title {
+    font-size: clamp(4.5rem, 16vw, 13rem);
+    margin-block: 0.6rem 1rem;
+  }
+
+  @media (min-width: 900px) {
+    .hero__content { text-align: right; }
+    .hero__img { object-position: 20% 35%; }
+    .hero__shade {
+      background:
+        linear-gradient(to top, var(--bg) 0%, rgba(10, 10, 11, 0.3) 35%, transparent 70%),
+        linear-gradient(to left, rgba(10, 10, 11, 0.85) 10%, transparent 65%);
+    }
+    .hero__title { font-size: clamp(5rem, 11vw, 11rem); }
+  }
+
+  .hero__roles {
+    margin: 0;
+    color: var(--text);
+    opacity: 0.85;
+    font-size: clamp(0.9rem, 1.6vw, 1.1rem);
+  }
+
+  .intro {
+    padding-block: clamp(3rem, 8vw, 6rem);
+    display: grid;
+    gap: 1rem;
+  }
+
+  .intro__text {
+    margin: 0;
+    max-width: 52rem;
+    font-size: clamp(1.25rem, 2.6vw, 1.9rem);
+    line-height: 1.4;
+    font-weight: 300;
+  }
+
+  .projects__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .projects__title { font-size: clamp(3rem, 8vw, 5.5rem); }
+
+  .filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .filter__btn {
+    font: inherit;
+    font-size: 0.85rem;
+    color: var(--muted);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.5em 1em;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+  }
+
+  .filter__btn span { opacity: 0.6; margin-left: 0.25em; font-variant-numeric: tabular-nums; }
+  .filter__btn:hover { color: var(--text); border-color: var(--muted); }
+  .filter__btn.is-active { color: #111; background: var(--accent); border-color: var(--accent); }
+
+  .grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+    gap: clamp(1.5rem, 3vw, 2.5rem) clamp(1rem, 2vw, 1.75rem);
+  }
+
+  .card { animation: fade-in 0.4s ease both; }
+
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(8px); }
+  }
+
+  .card__link { display: block; text-decoration: none; }
+
+  .card__media {
+    position: relative;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    background: var(--bg-raised);
+    border-radius: 4px;
+  }
+
+  .card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.85) brightness(0.85);
+    transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1), filter 0.5s;
+  }
+
+  .card__link:hover .card__img,
+  .card__link:focus-visible .card__img {
+    transform: scale(1.04);
+    filter: saturate(1) brightness(1);
+  }
+
+  .card__num {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.9rem;
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    color: var(--text);
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
+  }
+
+  .card__body { padding-top: 1rem; }
+
+  .card__title {
+    font-size: clamp(1.8rem, 3vw, 2.2rem);
+    margin-block: 0.35rem 0.4rem;
+    transition: color 0.2s;
+  }
+
+  .card__link:hover .card__title { color: var(--accent); }
+
+  .card__meta { margin: 0; font-size: 0.85rem; color: var(--muted); }
+</style>

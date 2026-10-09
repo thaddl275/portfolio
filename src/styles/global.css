@@ -1,0 +1,100 @@
+@import '@fontsource/bebas-neue';
+@import '@fontsource-variable/inter';
+
+:root {
+  --bg: #0a0a0b;
+  --bg-raised: #141416;
+  --line: #26262a;
+  --text: #ebe7e0;
+  --muted: #8d8a84;
+  --accent: #f2a43a; /* Tungsten-Licht */
+  --font-display: 'Bebas Neue', 'Oswald', 'Arial Narrow', sans-serif;
+  --font-body: 'Inter Variable', system-ui, -apple-system, sans-serif;
+  --gutter: clamp(1rem, 4vw, 3rem);
+  --max: 1400px;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Filmkorn über der ganzen Seite */
+body::after {
+  content: '';
+  position: fixed;
+  inset: -50%;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 1s steps(4) infinite;
+}
+
+@keyframes grain {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-3%, 2%); }
+  50% { transform: translate(2%, -3%); }
+  75% { transform: translate(-2%, -1%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::after { animation: none; }
+  html { scroll-behavior: auto; }
+}
+
+img { max-width: 100%; height: auto; display: block; }
+
+a { color: inherit; }
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 0.95;
+  margin: 0;
+}
+
+.wrap {
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.eyebrow--accent { color: var(--accent); }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.8em 1.3em;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+
+.btn--solid { background: var(--accent); border-color: var(--accent); color: #111; font-weight: 600; }
+.btn--solid:hover { background: transparent; }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
