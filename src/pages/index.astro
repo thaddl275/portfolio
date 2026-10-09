@@ -1,11 +1,23 @@
 ---
-import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import { CATEGORIES } from '../content.config';
 import portrait from '../assets/site/portrait.jpg';
+import { getProjects } from '../lib/projects';
 
-const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const projects = await getProjects();
+
+// Veranstaltungen, Marken und Personen, bei deren Projekten ich mitgewirkt habe
+const credits = [
+  'Bachfest Leipzig',
+  'Deichbrand Festival',
+  'Händelfestspiele Halle',
+  'Theater der Jungen Welt',
+  'Red Bull',
+  'Coca-Cola',
+  'RB Leipzig',
+  'Tutty Tran',
+];
 
 const categories = Object.entries(CATEGORIES)
   .map(([key, label]) => ({ key, label, count: projects.filter((p) => p.data.category === key).length }))
@@ -20,19 +32,24 @@ const categories = Object.entries(CATEGORIES)
       <div class="wrap hero__content">
         <p class="eyebrow eyebrow--accent">B.Eng. Medientechnik · Leipzig</p>
         <h1 class="hero__title">Thadeus<br />Zwiener</h1>
-        <p class="hero__roles">Technische Leitung · Licht · Kamera · Produktion</p>
-        <p class="hero__status"><span class="hero__dot"></span>Ab Januar 2027 offen für neue Stellen</p>
+        <p class="hero__roles">Produktion · Technische Leitung · Live &amp; Film</p>
+        <p class="hero__status"><span class="hero__dot"></span>Ab Januar 2027 offen für Jobs in Sachsen</p>
       </div>
     </div>
   </section>
 
-  <section class="intro wrap" id="about">
-    <p class="eyebrow">Über mich</p>
+  <section class="intro wrap">
     <p class="intro__text">
-      Willkommen in meinem Portfolio! Hier zeige ich einen Ausschnitt aus meinen Projekten der letzten Jahre – aus
-      meinem Medientechnik-Studium und darüber hinaus. Aktuell bin ich als Producer-Praktikant bei
-      <strong>Sons of Motion Pictures</strong>.
+      Ich organisiere, übernehme Verantwortung und setze zuverlässig um – von der Fashion Show bis zum Festival. Hier
+      siehst du einen Ausschnitt meiner Projekte aus dem Medientechnik-Studium und darüber hinaus. Aktuell bin ich
+      Producer-Praktikant bei <strong>Sons of Motion Pictures</strong>.
     </p>
+    <div class="credits">
+      <p class="eyebrow">Mitgewirkt bei Projekten für</p>
+      <ul class="credits__list">
+        {credits.map((c) => <li>{c}</li>)}
+      </ul>
+    </div>
   </section>
 
   <section class="wrap projects" id="projekte">
@@ -60,6 +77,7 @@ const categories = Object.entries(CATEGORIES)
               <div class="card__media">
                 <Image src={p.data.cover} alt="" widths={[480, 800, 1200]} sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw" class="card__img" />
                 <span class="card__num">{String(i + 1).padStart(2, '0')}</span>
+                {p.data.draft && <span class="draft-badge">Entwurf</span>}
               </div>
               <div class="card__body">
                 <p class="eyebrow eyebrow--accent">{p.data.role}</p>
@@ -74,6 +92,53 @@ const categories = Object.entries(CATEGORIES)
         ))
       }
     </ul>
+  </section>
+
+  <section class="wrap about" id="about">
+    <div class="about__head">
+      <p class="eyebrow eyebrow--accent">Über mich</p>
+      <h2 class="about__title">Vom Vlog zur Produktion</h2>
+    </div>
+    <div class="about__text">
+      <p>
+        Angefangen hat alles mit kleinen Vlogs, Videos und Experimenten an Kamera und Schnitt in meiner Jugend. Daraus
+        wurde ein Medientechnik-Studium an der HTWK Leipzig, das ich 2026 mit dem Bachelor abgeschlossen habe – und eine
+        ganze Reihe von Produktionen, von Fashion Shows über Live-Gameshows bis zu Festivals.
+      </p>
+      <p>
+        Am wohlsten fühle ich mich dort, wo geplant, organisiert und umgesetzt wird. Ich übernehme gern Verantwortung,
+        behalte Zeit, Ressourcen und Team im Blick und sorge dafür, dass am Ende alles läuft. Wer mit mir arbeitet,
+        schätzt meine zugängliche, zuverlässige und lustige Art – und den Optimismus und die Energie, die ich auch in
+        stressigen Momenten mitbringe.
+      </p>
+      <p>
+        Abseits der Produktion kümmere ich mich um eine ganze Menge Pflanzen und bin begeisterter Brettspieler.
+      </p>
+    </div>
+    <dl class="about__facts">
+      <div>
+        <dt>Abschluss</dt>
+        <dd>B.Eng. Medientechnik, HTWK Leipzig (2026)</dd>
+      </div>
+      <div>
+        <dt>Bachelorarbeit</dt>
+        <dd>
+          Leistungsanalyse KI-basierter Regiesysteme im Vergleich zu menschlichen Schnittentscheidungen in
+          standardisierten Live-Formaten
+        </dd>
+      </div>
+      <div>
+        <dt>Aktuell</dt>
+        <dd>Producer-Praktikum bei Sons of Motion Pictures</dd>
+      </div>
+      <div>
+        <dt>Ab Januar 2027 gesucht</dt>
+        <dd>
+          Junior Producer, Junior Manager, Produktionsassistenz oder Aufnahmeleitungsassistenz – in der Veranstaltungs-
+          und Filmbranche in Sachsen
+        </dd>
+      </div>
+    </dl>
   </section>
 </Base>
 
@@ -196,6 +261,65 @@ const categories = Object.entries(CATEGORIES)
   }
 
   .intro__text strong { font-weight: 500; color: var(--accent); }
+
+  .credits { margin-top: clamp(1.5rem, 4vw, 2.5rem); }
+
+  .credits__list {
+    list-style: none;
+    margin: 0.75rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 0;
+    font-family: var(--font-display);
+    font-size: calc(var(--ds) * clamp(1.4rem, 2.6vw, 2rem));
+    line-height: 1.2;
+  }
+
+  .credits__list li:not(:last-child)::after {
+    content: '·';
+    margin-inline: 0.5em;
+    color: var(--accent);
+  }
+
+  .about {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+    gap: 1.5rem clamp(2rem, 6vw, 6rem);
+    margin-top: clamp(4rem, 10vw, 8rem);
+    padding-top: clamp(2rem, 5vw, 3rem);
+    border-top: 1px solid var(--line);
+  }
+
+  .about__title {
+    font-size: calc(var(--ds) * clamp(3rem, 7vw, 5.5rem));
+    margin-top: 0.75rem;
+  }
+
+  .about__text {
+    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+    font-weight: 300;
+    line-height: 1.65;
+  }
+
+  .about__text p { margin: 0 0 1em; }
+
+  .about__facts {
+    grid-column: 2;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+    gap: 1.25rem 2rem;
+  }
+
+  .about__facts div { border-top: 1px solid var(--line); padding-top: 0.75rem; }
+  .about__facts dt { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+  .about__facts dd { margin: 0.25rem 0 0; }
+
+  @media (max-width: 760px) {
+    .about { grid-template-columns: 1fr; }
+    .about__facts { grid-column: auto; }
+  }
 
   .intro {
     padding-block: clamp(3rem, 8vw, 6rem);

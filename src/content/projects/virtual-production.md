@@ -2,7 +2,7 @@
 title: Virtual Production Set
 role: 1. Kameraassistenz
 category: kamera
-order: 6
+order: 9
 cover: ../../assets/projects/virtual-production/03.jpg
 gallery:
   - ../../assets/projects/virtual-production/03.jpg

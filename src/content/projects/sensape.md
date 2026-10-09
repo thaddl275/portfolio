@@ -3,7 +3,7 @@ title: Sensape GmbH
 role: Game Developer · Praktikum & Werkstudent
 category: development
 location: Leipzig
-order: 8
+order: 11
 cover: ../../assets/projects/sensape/01.jpg
 gallery:
   - ../../assets/projects/sensape/01.jpg

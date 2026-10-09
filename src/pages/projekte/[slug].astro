@@ -1,11 +1,12 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { render } from 'astro:content';
 import { Image, getImage } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import { CATEGORIES } from '../../content.config';
+import { getProjects } from '../../lib/projects';
 
 export async function getStaticPaths() {
-  const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+  const projects = await getProjects();
   return projects.map((project, i) => ({
     params: { slug: project.id },
     props: {
@@ -40,6 +41,7 @@ const plainText = project.body?.replace(/\s+/g, ' ').trim().slice(0, 155);
       <div class="wrap head__content">
         <a href={`/#${data.category}`} class="eyebrow eyebrow--accent head__cat">{CATEGORIES[data.category]}</a>
         <h1 class="head__title">{data.title}</h1>
+        {data.draft && <p class="draft-badge draft-badge--inline">Entwurf – nur lokal sichtbar</p>}
       </div>
     </header>
 

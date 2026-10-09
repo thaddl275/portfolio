@@ -1,4 +1,4 @@
-@import '@fontsource/bebas-neue';
+@import '@fontsource/instrument-serif';
 @import '@fontsource-variable/inter';
 
 :root {
@@ -7,15 +7,15 @@
   --line: #26262a;
   --text: #ebe7e0;
   --muted: #8d8a84;
-  --accent: #f2a43a; /* Tungsten-Licht */
-  --font-display: 'Bebas Neue', 'Oswald', 'Arial Narrow', sans-serif;
+  --accent: #a6e35c; /* Greenscreen */
+  --font-display: 'Instrument Serif', Georgia, serif;
   --font-body: 'Inter Variable', system-ui, -apple-system, sans-serif;
   --font-label: var(--font-body);
   /* Feinjustierung je Überschriften-Schrift */
-  --ds: 1;
+  --ds: 0.95;
   --display-weight: 400;
-  --display-tracking: 0.02em;
-  --display-lh: 0.95;
+  --display-tracking: -0.01em;
+  --display-lh: 0.92;
   --on-accent: #111;
   --gutter: clamp(1rem, 4vw, 3rem);
   --max: 1400px;
@@ -104,5 +104,22 @@ h1, h2, h3 {
 
 .btn--solid { background: var(--accent); border-color: var(--accent); color: var(--on-accent); font-weight: 600; }
 .btn--solid:hover { background: transparent; }
+
+/* Markierung für Entwürfe (nur in der lokalen Vorschau zu sehen) */
+.draft-badge {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  padding: 0.25em 0.7em;
+  border-radius: 999px;
+  background: #ff5a4f;
+  color: #111;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.draft-badge--inline { position: static; display: inline-block; margin-top: 1rem; }
 
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }

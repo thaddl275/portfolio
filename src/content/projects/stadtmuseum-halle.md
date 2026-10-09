@@ -4,7 +4,7 @@ role: Technische Leitung & Licht
 category: licht
 year: 2026
 location: Stadtmuseum Halle (Saale) · Händelfestspiele
-order: 2
+order: 4
 cover: ../../assets/projects/stadtmuseum-halle/01.jpg
 gallery:
   - ../../assets/projects/stadtmuseum-halle/01.jpg

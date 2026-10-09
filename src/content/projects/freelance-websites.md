@@ -2,7 +2,7 @@
 title: Websites für Firmen
 role: Freelance
 category: development
-order: 9
+order: 12
 cover: ../../assets/projects/freelance-websites/01.jpg
 gallery:
   - ../../assets/projects/freelance-websites/01.jpg

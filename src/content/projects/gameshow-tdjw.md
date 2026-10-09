@@ -3,7 +3,7 @@ title: Live-Gameshow im TDJW
 role: Produktionsleitung
 category: produktion
 location: Theater der Jungen Welt, Leipzig
-order: 3
+order: 2
 cover: ../../assets/projects/gameshow-tdjw/02.jpg
 gallery:
   - ../../assets/projects/gameshow-tdjw/02.jpg

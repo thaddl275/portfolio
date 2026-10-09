@@ -4,7 +4,7 @@ role: Schulterkamera
 category: kamera
 year: 2025
 location: Leipzig
-order: 7
+order: 10
 cover: ../../assets/projects/bachfest-2025/01.jpg
 gallery:
   - ../../assets/projects/bachfest-2025/01.jpg

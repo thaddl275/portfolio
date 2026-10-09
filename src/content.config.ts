@@ -5,9 +5,9 @@ import { z } from 'astro/zod';
 // Kategorien für den Filter auf der Startseite.
 // Neue Kategorie? Hier ergänzen – Filter-Buttons entstehen automatisch.
 export const CATEGORIES = {
-  licht: 'Technische Leitung & Licht',
+  licht: 'Technik & Licht',
   produktion: 'Produktion & Regie',
-  kamera: 'Kamera',
+  kamera: 'Kamera & Bild',
   development: 'Development',
 } as const;
 
@@ -22,6 +22,8 @@ const projects = defineCollection({
       location: z.string().optional(),
       // Kleiner = weiter oben in der Liste
       order: z.number().default(100),
+      // Entwürfe sind nur lokal (npm run dev) sichtbar, nicht auf der Live-Seite
+      draft: z.boolean().default(false),
       cover: image(),
       gallery: z.array(image()).default([]),
       credits: z.string().optional(),

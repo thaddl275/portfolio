@@ -3,7 +3,7 @@ title: HTWK-Talkshow „Streetwork“
 role: Regie
 category: produktion
 location: HTWK Leipzig
-order: 5
+order: 7
 cover: ../../assets/projects/htwk-talkshow/03.jpg
 gallery:
   - ../../assets/projects/htwk-talkshow/03.jpg
