@@ -1,0 +1,52 @@
+---
+import Base from './Base.astro';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<Base title={title}>
+  <article class="wrap legal">
+    <h1 class="legal__title">{title}</h1>
+    <div class="legal__body">
+      <slot />
+    </div>
+  </article>
+</Base>
+
+<style>
+  .legal { padding-block: clamp(3rem, 8vw, 6rem) 0; }
+
+  .legal__title {
+    font-size: calc(var(--ds) * clamp(3rem, 8vw, 5.5rem));
+    margin-bottom: 2.5rem;
+  }
+
+  .legal__body { max-width: 44rem; color: var(--muted); }
+
+  .legal__body :global(h2) {
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 1.4;
+    color: var(--text);
+    margin: 2.25rem 0 0.5rem;
+  }
+
+  .legal__body :global(p),
+  .legal__body :global(ul) { margin: 0 0 1em; }
+
+  .legal__body :global(a) { color: var(--text); }
+
+  /* Platzhalter, die noch ausgefüllt werden müssen */
+  .legal__body :global(mark) {
+    background: rgba(255, 90, 79, 0.2);
+    color: #ff8a80;
+    padding: 0 0.25em;
+    border-radius: 3px;
+  }
+</style>

@@ -21,6 +21,7 @@ const categories = Object.entries(CATEGORIES)
         <p class="eyebrow eyebrow--accent">B.Eng. Medientechnik · Leipzig</p>
         <h1 class="hero__title">Thadeus<br />Zwiener</h1>
         <p class="hero__roles">Technische Leitung · Licht · Kamera · Produktion</p>
+        <p class="hero__status"><span class="hero__dot"></span>Ab Januar 2027 offen für neue Stellen</p>
       </div>
     </div>
   </section>
@@ -28,8 +29,9 @@ const categories = Object.entries(CATEGORIES)
   <section class="intro wrap" id="about">
     <p class="eyebrow">Über mich</p>
     <p class="intro__text">
-      Willkommen in meinem Portfolio! Hier zeige ich einen Ausschnitt aus meinen Projekten, die während der letzten
-      Jahre entstanden sind – im Medientechnik-Bachelor oder auch außerhalb. Viel Spaß!
+      Willkommen in meinem Portfolio! Hier zeige ich einen Ausschnitt aus meinen Projekten der letzten Jahre – aus
+      meinem Medientechnik-Studium und darüber hinaus. Aktuell bin ich als Producer-Praktikant bei
+      <strong>Sons of Motion Pictures</strong>.
     </p>
   </section>
 
@@ -140,7 +142,7 @@ const categories = Object.entries(CATEGORIES)
   }
 
   .hero__title {
-    font-size: clamp(4.5rem, 16vw, 13rem);
+    font-size: calc(var(--ds) * clamp(4.5rem, 16vw, 13rem));
     margin-block: 0.6rem 1rem;
   }
 
@@ -152,7 +154,7 @@ const categories = Object.entries(CATEGORIES)
         linear-gradient(to top, var(--bg) 0%, rgba(10, 10, 11, 0.3) 35%, transparent 70%),
         linear-gradient(to left, rgba(10, 10, 11, 0.85) 10%, transparent 65%);
     }
-    .hero__title { font-size: clamp(5rem, 11vw, 11rem); }
+    .hero__title { font-size: calc(var(--ds) * clamp(5rem, 11vw, 11rem)); }
   }
 
   .hero__roles {
@@ -161,6 +163,39 @@ const categories = Object.entries(CATEGORIES)
     opacity: 0.85;
     font-size: clamp(0.9rem, 1.6vw, 1.1rem);
   }
+
+  .hero__status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
+    margin: 1.25rem 0 0;
+    padding: 0.45em 0.9em;
+    border: 1px solid rgba(235, 231, 224, 0.25);
+    border-radius: 999px;
+    font-size: 0.8rem;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+
+  /* Blinkt wie die Tally-Lampe einer Kamera */
+  .hero__dot {
+    width: 0.55em;
+    height: 0.55em;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+    animation: tally 2s ease-in-out infinite;
+  }
+
+  @keyframes tally {
+    50% { opacity: 0.3; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero__dot { animation: none; }
+  }
+
+  .intro__text strong { font-weight: 500; color: var(--accent); }
 
   .intro {
     padding-block: clamp(3rem, 8vw, 6rem);
@@ -187,7 +222,7 @@ const categories = Object.entries(CATEGORIES)
     border-bottom: 1px solid var(--line);
   }
 
-  .projects__title { font-size: clamp(3rem, 8vw, 5.5rem); }
+  .projects__title { font-size: calc(var(--ds) * clamp(3rem, 8vw, 5.5rem)); }
 
   .filter {
     display: flex;
@@ -209,7 +244,7 @@ const categories = Object.entries(CATEGORIES)
 
   .filter__btn span { opacity: 0.6; margin-left: 0.25em; font-variant-numeric: tabular-nums; }
   .filter__btn:hover { color: var(--text); border-color: var(--muted); }
-  .filter__btn.is-active { color: #111; background: var(--accent); border-color: var(--accent); }
+  .filter__btn.is-active { color: var(--on-accent); background: var(--accent); border-color: var(--accent); }
 
   .grid {
     list-style: none;
@@ -255,7 +290,7 @@ const categories = Object.entries(CATEGORIES)
     top: 0.75rem;
     left: 0.9rem;
     font-family: var(--font-display);
-    font-size: 1.4rem;
+    font-size: calc(var(--ds) * 1.4rem);
     color: var(--text);
     text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
   }
@@ -263,7 +298,7 @@ const categories = Object.entries(CATEGORIES)
   .card__body { padding-top: 1rem; }
 
   .card__title {
-    font-size: clamp(1.8rem, 3vw, 2.2rem);
+    font-size: calc(var(--ds) * clamp(1.8rem, 3vw, 2.2rem));
     margin-block: 0.35rem 0.4rem;
     transition: color 0.2s;
   }

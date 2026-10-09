@@ -10,6 +10,13 @@
   --accent: #f2a43a; /* Tungsten-Licht */
   --font-display: 'Bebas Neue', 'Oswald', 'Arial Narrow', sans-serif;
   --font-body: 'Inter Variable', system-ui, -apple-system, sans-serif;
+  --font-label: var(--font-body);
+  /* Feinjustierung je Überschriften-Schrift */
+  --ds: 1;
+  --display-weight: 400;
+  --display-tracking: 0.02em;
+  --display-lh: 0.95;
+  --on-accent: #111;
   --gutter: clamp(1rem, 4vw, 3rem);
   --max: 1400px;
   color-scheme: dark;
@@ -59,9 +66,9 @@ a { color: inherit; }
 
 h1, h2, h3 {
   font-family: var(--font-display);
-  font-weight: 400;
-  letter-spacing: 0.02em;
-  line-height: 0.95;
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  line-height: var(--display-lh);
   margin: 0;
 }
 
@@ -72,6 +79,7 @@ h1, h2, h3 {
 }
 
 .eyebrow {
+  font-family: var(--font-label);
   font-size: 0.75rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -94,7 +102,7 @@ h1, h2, h3 {
 
 .btn:hover { border-color: var(--accent); color: var(--accent); }
 
-.btn--solid { background: var(--accent); border-color: var(--accent); color: #111; font-weight: 600; }
+.btn--solid { background: var(--accent); border-color: var(--accent); color: var(--on-accent); font-weight: 600; }
 .btn--solid:hover { background: transparent; }
 
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }

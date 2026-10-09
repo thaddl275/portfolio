@@ -1,5 +1,8 @@
 ---
 import '../styles/global.css';
+import { getImage } from 'astro:assets';
+import DesignPreview from '../components/DesignPreview.astro';
+import portrait from '../assets/site/portrait.jpg';
 
 interface Props {
   title?: string;
@@ -11,6 +14,8 @@ const {
   description = 'Portfolio von Thadeus Zwiener – Medientechnik, Technische Leitung, Licht, Kamera und Produktion aus Leipzig.',
 } = Astro.props;
 const fullTitle = title ? `${title} – Thadeus Zwiener` : 'Thadeus Zwiener – Portfolio';
+// Vorschaubild, wenn der Link z. B. in LinkedIn, WhatsApp oder per Mail geteilt wird
+const ogImage = await getImage({ src: portrait, width: 1200, format: 'jpg' });
 ---
 
 <!doctype html>
@@ -22,10 +27,14 @@ const fullTitle = title ? `${title} – Thadeus Zwiener` : 'Thadeus Zwiener – 
     <meta name="description" content={description} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content={new URL(ogImage.src, Astro.site)} />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   </head>
   <body>
+    {import.meta.env.DEV && <DesignPreview />}
     <header class="nav">
       <div class="wrap nav__inner">
         <a href="/" class="nav__brand">Thadeus Zwiener</a>
@@ -57,7 +66,11 @@ const fullTitle = title ? `${title} – Thadeus Zwiener` : 'Thadeus Zwiener – 
             </a>
           </div>
         </div>
-        <p class="footer__meta">© {new Date().getFullYear()} Thadeus Zwiener</p>
+        <div class="footer__meta">
+          <span>© {new Date().getFullYear()} Thadeus Zwiener</span>
+          <a href="/impressum/">Impressum</a>
+          <a href="/datenschutz/">Datenschutz</a>
+        </div>
       </div>
     </footer>
   </body>
@@ -84,7 +97,7 @@ const fullTitle = title ? `${title} – Thadeus Zwiener` : 'Thadeus Zwiener – 
 
   .nav__brand {
     font-family: var(--font-display);
-    font-size: 1.5rem;
+    font-size: calc(var(--ds) * 1.5rem);
     letter-spacing: 0.06em;
     text-decoration: none;
   }
@@ -112,7 +125,7 @@ const fullTitle = title ? `${title} – Thadeus Zwiener` : 'Thadeus Zwiener – 
   }
 
   .footer__title {
-    font-size: clamp(2.8rem, 8vw, 6rem);
+    font-size: calc(var(--ds) * clamp(2.8rem, 8vw, 6rem));
     margin-block: 0.75rem 1.25rem;
   }
 
@@ -126,13 +139,19 @@ const fullTitle = title ? `${title} – Thadeus Zwiener` : 'Thadeus Zwiener – 
   }
 
   .footer__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
     margin-top: 4rem;
     font-size: 0.8rem;
     color: var(--muted);
   }
 
+  .footer__meta a { text-decoration: none; }
+  .footer__meta a:hover { color: var(--text); }
+
   @media (max-width: 520px) {
-    .nav__brand { font-size: 1.2rem; }
+    .nav__brand { font-size: calc(var(--ds) * 1.2rem); }
     nav a { font-size: 0.7rem; letter-spacing: 0.08em; }
   }
 </style>
